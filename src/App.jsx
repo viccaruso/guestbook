@@ -1,5 +1,6 @@
 import { Redirect } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import Auth from './views/Auth';
 import Guestbook from './views/Guestbook';
 
@@ -9,9 +10,9 @@ export default function App() {
       <Route path="/login">
         <Auth />
       </Route>
-      <Route path="/guestbook">
+      <PrivateRoute path="/guestbook">
         <Guestbook />
-      </Route>
+      </PrivateRoute>
       <Route path="/">
         <Redirect to="/guestbook" />
       </Route>
