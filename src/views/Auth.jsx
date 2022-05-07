@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const location = useLocation();
+  const history = useHistory();
 
   function handleSubmit(event) {
-    event.preventDefault();
-    console.log('Email', { email });
+    try {
+      event.preventDefault();
+      // TODO Log in with supabase here
+      const url = location.state.redirectedFrom
+        ? location.state.redirectedFrom.pathname
+        : '/';
+      history.replace(url);
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
