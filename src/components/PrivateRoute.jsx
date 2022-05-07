@@ -1,11 +1,9 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { Route } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 
 export default function PrivateRoute({ children, ...rest }) {
   const location = useLocation();
-  const user = { email: '' };
+  const context = useUser();
+
   return (
     <Route {...rest}>
       {user.email ? (
