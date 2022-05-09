@@ -18,5 +18,18 @@ describe('<App />', () => {
         <App />
       </MemoryRouter>
     );
+
+    const emailInput = screen.getByPlaceholderText(/Email address/);
+    userEvent.type(emailInput, 'test@test.com');
+
+    const passwordInput = screen.getByPlaceholderText(/Password/);
+    userEvent.type(passwordInput, 'test password');
+
+    const loginButton = screen.getByRole('button', { name: /Login/ });
+    userEvent.click(loginButton);
+
+    const guestbookHeading = await screen.findByRole('heading', {
+      name: /Guestbook/,
+    });
   });
 });
