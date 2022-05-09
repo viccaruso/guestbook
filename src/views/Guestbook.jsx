@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { getEntries } from '../services/entries';
 
@@ -8,8 +8,9 @@ export default function Guestbook() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
-      .then(() => getEntries())
+    setLoading(true);
+
+    getEntries()
       .then((results) => setEntries(results))
       .finally(() => setLoading(false));
   }, []);
