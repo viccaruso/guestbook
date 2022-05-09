@@ -12,6 +12,7 @@ export default function Guestbook() {
 
     getEntries()
       .then((results) => setEntries(results))
+      .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }, []);
 
