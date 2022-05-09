@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
 export default function Auth() {
-  const { login } = useUser();
+  const { login, signUp } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,6 +18,15 @@ export default function Auth() {
         ? location.state.redirectedFrom.pathname
         : '/';
       history.replace(url);
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
+  async function handleSignup(event) {
+    try {
+      await signUp(email, password);
+      history.replace('/guestbook');
     } catch (error) {
       setError(error.message);
     }
@@ -44,6 +53,9 @@ export default function Auth() {
           required
         />
         <button type="submit">Login</button>
+        <button type="button" onClick={handleSignup}>
+          Sign up
+        </button>
         <p>{error}</p>
       </form>
     </>
