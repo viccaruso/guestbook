@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 export default function Auth() {
+  const { login } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const location = useLocation();
   const history = useHistory();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     try {
       event.preventDefault();
-      // TODO Log in with supabase here
+      await login(email, password);
       const url = location.state.redirectedFrom
         ? location.state.redirectedFrom.pathname
         : '/';
@@ -31,6 +33,7 @@ export default function Auth() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email address"
+          required
         />
         <label htmlFor="password">Password</label>
         <input
@@ -38,8 +41,10 @@ export default function Auth() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          required
         />
         <button type="submit">Login</button>
+        <p>{error}</p>
       </form>
     </>
   );
